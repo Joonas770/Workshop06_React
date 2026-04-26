@@ -19,17 +19,52 @@ function EditPostPage() {
 
   useEffect(() => {
     // TODO (student): Replace this placeholder with GET /api/posts/:id fetch logic.
-    setLoading(false)
-  }, [id])
+    const fetchPost = async () => {
+     try {
+        const res = await fetch(`http://localhost:3000/api/posts/${id}`)
 
-  async function handleSubmit(e) {
-    e.preventDefault()
+        if (!res.ok) {
+          throw new Error('Failed to fetch post')
+        }
+
+        const data = await res.json()
+        setPost(data)
+      } catch (err) {
+        setError(err.message)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPost()
+  }, [id]) 
+
+async function handleSubmit(formData) {
     setSubmitting(true)
     setError(null)
 
-    // TODO (student): Implement PUT /api/posts/:id.
-    setError('TODO: implement PUT /api/posts/:id in EditPostPage')
-    setSubmitting(false)
+    try {
+      const res = await fetch(`http://localhost:3000/api/posts/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      if (!res.ok) {
+        throw new Error('Failed to update post')
+      }
+
+      const data = await res.json()
+
+      // 🔥 redirect takaisin postiin
+      navigate(`/posts/${data._id}`)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (loading) return <p className="status-msg">Loading…</p>

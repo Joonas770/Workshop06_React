@@ -1,81 +1,31 @@
-# WS06 React
+# Workshop 06 React 
+Tämä tehtävä on osa full-stack kurssia. Tehtävässä luodaan fullstack-blogi sovellus.
 
-This repository contains a student starter package and a complete reference solution for the WS06 React + REST API workshop.
+Tehtävä koostu kahdesta osasta
+* Backend (Node.js + Express), joka tarjoaa REST-rajapinnan ja yhteys luotu MongoDB tietokantaan.
+* Frontend(React), jolla luotu käyttöliittymä käyttäjälle.
 
-## Current Structure
+MongoDB-tietokantaan tallennetaan blogipostaukset sekä Mongoosea käytetään datan validointiin ja skeemojen määrittelyyn.
 
-```text
-WS06_React/
-├─ README.md
-├─ requirements.md
-├─ Starter/
-│  ├─ backend/
-│  │  ├─ .env.example
-│  │  ├─ README.md
-│  │  ├─ package.json
-│  │  ├─ models/
-│  │  └─ routes/
-│  └─ frontend/
-│     ├─ README.md
-│     ├─ package.json
-│     ├─ vite.config.js
-│     └─ src/
-├─ solution/
-│  ├─ backend/
-│  │  ├─ README.md
-│  │  ├─ package.json
-│  │  ├─ server.js
-│  │  ├─ models/
-│  │  └─ routes/
-│  └─ frontend/
-│     ├─ README.md
-│     ├─ package.json
-│     ├─ vite.config.js
-│     └─ src/
-└─ tuntiharjoitukset/
-```
 
-## Folder Purpose
+# Toteutukset
+- Luotu yhteys MongoDB-tietokantaan connectDatabase() funktiolla server.js tiedostossa sekä .env tiedosto, johon määritelty yhteys sekä portti.
+- Post Schema tiedostoon lisätty kentät: title, content sekä author ja näille arvot määritelty.
+- Tarkistettu postauksien lisäys, päivitys ja poistaminen onnistuneesti.
+- Virheenkäsittely
+- CORS-ongelma ratkaistu lisämäällä corssin server.js
+- Postmania käytetty API pyyntöjen tarkastamiseen ja tietojen lisäämiseen ja poistamiseen.
+- Luotu React-sovellus Vite:llä
+- Toteutettu router reititys 
+- Haettu data backendistä fetch-kutsuilla
+- graaffinen toteutus postauksien listaukselle, lisäämiselle, poistamiselle ja muokkaamiselle.
 
-- `Starter/`
-  - Student workspace with TODOs and guided tasks.
-  - Students should implement missing backend and frontend features here.
+# Käyttöönohje
+1. Avaa terminaali ja siirry kansioihin starter/backend ja starter/frotend ja lataa paketit npm install.
+2. Linkitä MongoDB database .env tiedostoon luo jos ei ole
+3. Käynnistä molemmat frotend and backend localhostiin npm run dev komennolla
+4. Avaa frotendin localhost ja lisää postauksiin dataa.
 
-- `solution/`
-  - Teacher/reference implementation.
-  - Use this to compare behavior or review complete code.
 
-- `tuntiharjoitukset/`
-  - Additional class exercises kept for course support.
-
-## Recommended Workflow
-
-1. Build and test in `Starter/backend`.
-2. Build and test in `Starter/frontend`.
-3. Compare with `solution/` only when needed.
-
-## Run Instructions
-
-### Backend starter
-
-```bash
-cd Starter/backend
-npm install
-cp .env.example .env
-npm run dev
-```
-
-### Frontend starter
-
-```bash
-cd Starter/frontend
-npm install
-npm run dev
-```
-
-The frontend uses `/api/posts` and expects the backend to run on `http://localhost:3000`.
-
-## Notes
-
-- Keep student implementation work inside `Starter/`.
-- Keep `solution/` unchanged as the reference baseline.
+# Yhteenveto
+Projektissa toteutettiin fullstack-blogisovellus Reactilla, Node.js:llä ja MongoDB:llä. Sovellus mahdollistaa postausten luomisen, hakemisen, muokkaamisen ja poistamisen (CRUD). Backend tarjoaa REST-rajapinnan ja huolehtii tietokannasta, kun taas frontend vastaa käyttöliittymästä ja kommunikoi backendin kanssa fetch-kutsuilla. Lopputuloksena syntyi toimiva fullstack-sovellus, jossa kaikki perustoiminnot toimivat end-to-end.

@@ -61,7 +61,26 @@ router.put('/:id', async (req, res) => {
     return res.status(400).json({ error: 'Invalid post id' });
   }
 
-  return res.status(501).json({ message: 'TODO: implement PUT /api/posts/:id' });
+    try {
+    const updatedPost = await Post.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+
+    if (!updatedPost) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    res.json(updatedPost);
+
+  } catch (error) {
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({ error: error.message });
+    }
+
+    res.status(500).json({ error: error.message });
+  }
 });
 
 router.delete('/:id', async (req, res) => {
@@ -76,7 +95,18 @@ router.delete('/:id', async (req, res) => {
     return res.status(400).json({ error: 'Invalid post id' });
   }
 
-  return res.status(501).json({ message: 'TODO: implement DELETE /api/posts/:id' });
+  try {
+  const deletedPost = await Post.findByIdAndDelete(req.params.id);
+
+  if (!deletedPost) {
+    return res.status(404).json({ error: 'Post not found' });
+  }
+
+  res.json({ message: 'Post deleted successfully' });
+
+} catch (error) {
+  res.status(500).json({ error: error.message });
+}
 });
 
 module.exports = router;

@@ -2,15 +2,25 @@ const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const cors = require('cors');
 
-const pagesRouter = require('./routes/pages');
+const dns = require('node:dns');
+
+dns.setServers(['1.1.1.1', '8.8.8.8']);
+
 const postsRouter = require('./routes/posts');
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const publicDir = path.join(__dirname, 'public');
 
-// ─── TODO: Write the connectToDatabase function ──────────────────────────────
+
+app.use(cors({
+  origin: 'http://localhost:5173', 
+}));
+
+// ─── TODO: Write the connectToDxatabase function ──────────────────────────────
 // This function should:
 //   1. Check if process.env.MONGODB_URI exists
 //      - If missing, warn the user and return early
@@ -25,14 +35,22 @@ const publicDir = path.join(__dirname, 'public');
 
 async function connectToDatabase() {
   // Your code here
-  throw new Error('connectToDatabase not implemented. See TODO above.')
+    if (!process.env.MONGODB_URI) {
+      console.log("MONGODB_URI is not existing. Create a .env file to continue.");
+      return;
+    }
+    try {
+      await mongoose.connect(process.env.MONGODB_URI, {dbName: 'blog'})
+      console.log('Connected to MongoDB');
+    } catch (error) {
+      console.error('MongoDB connection error:', error.message);
+    }
 }
 
 app.locals.publicDir = publicDir;
 app.use(express.json());
 app.use(express.static(publicDir));
 
-app.use('/', pagesRouter);
 app.use('/api/posts', postsRouter);
 
 app.use((req, res) => {
@@ -48,7 +66,6 @@ connectToDatabase().then(() => {
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
     console.log('Mounted routers:');
-    console.log('  / -> routes/pages.js');
     console.log('  /api/posts -> routes/posts.js');
   });
 });

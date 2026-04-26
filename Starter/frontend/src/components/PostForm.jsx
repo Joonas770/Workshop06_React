@@ -7,8 +7,23 @@
 // - Disable the submit button while submitting === true
 
 function PostForm({ initialData = {}, onSubmit, submitting }) {
+
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const formData = new FormData(e.target)
+
+    const data = {
+      title: formData.get('title'),
+      author: formData.get('author'),
+      content: formData.get('content')
+    }
+
+    onSubmit(data)
+  }
+
   return (
-    <form className="post-form" onSubmit={onSubmit}>
+    <form className="post-form" onSubmit={handleSubmit}>
       <div className="form-field">
         <label htmlFor="title">Title</label>
         <input

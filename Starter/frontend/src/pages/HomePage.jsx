@@ -14,7 +14,24 @@ function HomePage() {
 
   useEffect(() => {
     // TODO (student): Replace this placeholder with real fetch logic.
-    setLoading(false)
+    const fetchPosts = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/api/posts')
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch posts')
+      }
+
+      const data = await res.json()
+      setPosts(data)
+    } catch (err) {
+      setError(err.message)
+    } finally {
+      setLoading(false)
+    }
+    }
+
+    fetchPosts()
   }, [])
 
   if (loading) return <p className="status-msg">Loading posts…</p>

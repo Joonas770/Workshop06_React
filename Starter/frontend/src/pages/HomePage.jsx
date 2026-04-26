@@ -16,7 +16,7 @@ function HomePage() {
     // TODO (student): Replace this placeholder with real fetch logic.
     const fetchPosts = async () => {
     try {
-      const res = await fetch('http://localhost:3000/api/posts')
+      const res = await fetch('https://workshop06-react-8igk.onrender.com/api/posts')
 
       if (!res.ok) {
         throw new Error('Failed to fetch posts')

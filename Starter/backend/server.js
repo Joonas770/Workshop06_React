@@ -17,7 +17,9 @@ const publicDir = path.join(__dirname, 'public');
 
 
 app.use(cors({
-  origin: 'http://localhost:5173', 
+  origin: 'http://localhost:5173',
+  'https://workshop06-react-1.onrender.com',
+  
 }));
 
 // ─── TODO: Write the connectToDxatabase function ──────────────────────────────
